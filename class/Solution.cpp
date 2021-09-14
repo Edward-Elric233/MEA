@@ -107,5 +107,5 @@ std::istream &operator >> (std::istream &is, Solution &solution) {
 }
 
 int Solution::dis(const Solution &lhs, const Solution &rhs, int orderIdx) {
-    
+
 }
