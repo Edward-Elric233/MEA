@@ -4,6 +4,7 @@
 // Date: 2021/9/10
 // Description: 
 #include "data.h"
+#include <ctime>
 
 namespace data {
     std::vector<std::shared_ptr<Job>> job_vec;
@@ -13,4 +14,12 @@ namespace data {
     std::unique_ptr<Random> random;
     int seed;
     int time;
+    int p = 20;
+    double alpha = 0.4;
+    double beta = 0.6;
+    int gamma = 5;
+    int eps = 3;
+    int pathLinkIterCount = 10;
+    int repeatCount = p * 2;
+    clock_t expires;
 }

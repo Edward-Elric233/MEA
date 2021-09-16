@@ -40,7 +40,7 @@ void read(std::istream &is) {
             }
         }
     }
-    random = unique_ptr<Random>(new Random(N, M, data::seed));
+    random = unique_ptr<Random>(new Random(data::seed));
     Solution::init();
 }
 
@@ -60,4 +60,47 @@ void test_read() {
         }
         cout << "\n";
     }
+}
+std::shared_ptr<Solution> MAE() {
+    int gen = 0;
+    int repeatCount = 0;
+    auto S1 = make_shared<Solution>();
+    auto S2 = make_shared<Solution>();
+    auto Sc = make_shared<Solution>();
+    auto Sp = make_shared<Solution>();
+    auto S = make_shared<Solution>();
+    decltype(S1) S1_, S2_;
+    while (repeatCount < data::repeatCount) {
+        if (clock() > data::expires) break;
+        S1_ = Solution::pathRelink(S1, S2);
+        S2_ = Solution::pathRelink(S2, S1);
+//        S1_ = S1;
+//        S2_ = S2;
+        S1 = Solution::tabuSearch(S1_);
+        S2 = Solution::tabuSearch(S2_);
+        if (*S1 < *Sc) {
+            Sc = S1;
+        }
+        if (*S2 < *Sc) {
+            Sc = S2;
+        }
+        if (*Sc < *S) {
+            repeatCount = 0;
+            S = Sc;
+//            cout << *S << endl;
+//            cout << S->getMakeSpan() << endl;
+        }
+        if (gen == data::p) {
+            S1 = Sp;
+            Sp = Sc;
+            Sc = make_shared<Solution>();
+            gen = 0;
+        }
+        if (Solution::dis(*S1, *S2) < data::eps)  {
+            S2 = make_shared<Solution>();
+        }
+        ++gen;
+        ++repeatCount;
+    }
+    return S;
 }

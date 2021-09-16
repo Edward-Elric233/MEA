@@ -7,6 +7,8 @@ include_directories(src)
 include_directories(class)
 include_directories(lib)
 
+set(CMAKE_CXX_FLAGS "-static-libgcc -static-libstdc++ ${CMAKE_CXX_FLAGS}")
+
 file(GLOB src_file src/*.cpp)
 file(GLOB class_file class/*.cpp)
 

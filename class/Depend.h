@@ -18,6 +18,7 @@ public:
     std::vector<bool> isVis;
     std::vector<bool> isInStack;
     std::vector<int> degree;
+    std::vector<std::vector<int>> record;
     bool isCircleUtil(int u);
     void getDegreeUtil(int u);
 public:
@@ -32,10 +33,12 @@ public:
     , degree(_V)
     , belong(_V)
     , isVis(_V)
+    , record(_V)
     , isInStack(_V) {}
-    Depend(const Depend& rhs) {
+    Depend(const Depend& rhs): Depend() {
         for (int i = 0; i < V; ++i) {
             head[i] = rhs.head[i];
+            belong[i] = rhs.belong[i];
         }
         for (int i = 0; i < E; ++i) {
             edges[i] = rhs.edges[i];
@@ -59,7 +62,7 @@ public:
     }
     bool isCircle();
     void getDegree();
-    int getMakeSpan();
+    int getMakeSpan(std::vector<int> &path);
 };
 
 

@@ -21,6 +21,14 @@ namespace data {
     extern std::unique_ptr<Random> random;
     extern int seed;
     extern int time;
+    extern int p;
+    extern double alpha;
+    extern double beta;
+    extern int gamma;
+    extern int eps;
+    extern int pathLinkIterCount;
+    extern int repeatCount;
+    extern clock_t expires;
 }
 
 #endif //FJSP_DATA_H

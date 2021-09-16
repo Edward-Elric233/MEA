@@ -47,13 +47,14 @@ void Depend::getDegree() {
     }
 }
 
-int Depend::getMakeSpan() {
+int Depend::getMakeSpan(std::vector<int> &path) {
 //    for (int i = 0; i < V; ++i) {
 //        auto &order = data::order_vec[i];
 //        std::cout << i << " : "  << order->job_idx << " " << order->idx << "\n";
 //    }
 //    std::cout << std::endl;
     std::list<std::pair<int, int>> orderList;
+    for (auto &r : record) r.clear();
     getDegree();
     int ret = 0;
     decltype(orderList.begin()) it, t;
@@ -61,6 +62,7 @@ int Depend::getMakeSpan() {
     for (int i = 0; i < V; ++i) {
         if (degree[i] == 0) {
             orderList.push_back({std::get<2>(belong[i]), i});
+            record[i].push_back(i);
         }
     }
     while (!orderList.empty()) {
@@ -83,7 +85,12 @@ int Depend::getMakeSpan() {
             --degree[v];
             if (degree[v] == 0) {
                 orderList.push_back({std::get<2>(belong[v]), v});
+                record[v] = record[order.second];
+                record[v].push_back(v);
             }
+        }
+        if (orderList.empty()) {
+            path = record[order.second];
         }
     }
     return ret;

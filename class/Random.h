@@ -10,18 +10,12 @@
 
 class Random {
     std::default_random_engine random;
-    std::uniform_int_distribution<int> distribution_N;
-    std::uniform_int_distribution<int> distribution_M;
+    std::uniform_int_distribution<int> distribution;
 public:
-    Random(int n, int m, int _seed = std::time(nullptr))
-    : random(_seed)
-    , distribution_N(0, n - 1)
-    , distribution_M(0, m - 1) {}
-    int getRandomOrder() {
-        return distribution_N(random);
-    }
-    int getRandomMachine () {
-        return distribution_M(random);
+    Random(int _seed = std::time(nullptr))
+    : random(_seed) {}
+    int getRandom() {
+        return distribution(random);
     }
     std::default_random_engine &getRandomEngine () {
         return random;
